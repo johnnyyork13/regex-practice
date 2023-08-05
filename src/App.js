@@ -10,17 +10,41 @@ function App() {
     sample: ""
   })
 
+  const [startBracket, setStartBracket] = React.useState({
+    started: false,
+    pattern: ""
+  })
+
   const [result, setResult] = React.useState("");
 
   function handlePatternChange(e) {
-    try {
-      setRegex((prev) => ({
-        ...prev,
-        pattern: `/${e.target.value}/`
-      }))
-    } catch (err) {
-      console.log(err);
+    const val = e.target.value;
+    if (val[val.length - 1] === "[") {
+      setStartBracket({
+        started: true,
+        pattern: ""
+      })
+      console.log("check start", startBracket);
     }
+    
+    if (!startBracket.started) {
+      try {
+        setRegex((prev) => ({
+          ...prev,
+          pattern: `/${e.target.value}/`
+        }))
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      const oldPattern = startBracket.pattern;
+      setStartBracket((prev) => ({
+        ...prev,
+        pattern: oldPattern + val
+      }))
+      console.log(startBracket.pattern);
+    }
+    
 
   }
 
