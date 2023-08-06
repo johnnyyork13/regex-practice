@@ -32,7 +32,7 @@ function App() {
         try {
           setRegex((prev) => ({
             ...prev,
-            output: sample.match(fixedPattern) ? sample.match(`${fixedPattern}`) : "boob"
+            output: sample.match(fixedPattern) ? sample.match(`${fixedPattern}`) : ""
           }))
           console.log(sample, fixedPattern, sample.match(fixedPattern));
         } catch (err) {
@@ -68,20 +68,26 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Regex Pattern Configuration</h1>
       <div className="pattern-container">
         <div className="pattern-input-container">
           <label>Pattern:
                 <input className="pattern-container-input" name="pattern" onChange={handlePatternChange}></input>
           </label>
           <label>Output:
-                <input className="pattern-container-output" name="output" value={regex.output} readOnly={true}></input>  
+                <input className="pattern-container-input" name="output" value={regex.output} readOnly={true}></input>  
           </label> 
         </div>
-        <label>Selected:
+        {/* <label>Selected:
                 <input className="patter-container-selected" name="selected" onChange={handleSelectedChange}></input>
-        </label>
+        </label> */}
       </div>
-      <textarea name="sample" onChange={handleSampleChange}></textarea>
+      <textarea 
+          name="sample" 
+          onChange={handleSampleChange}
+          onLoad={handleSampleChange}
+          value={"Minim nostrud qui irure voluptate pariatur dolore dolor amet et labore anim pariatur veniam culpa. Dolor ad sint labore aute pariatur aliqua aute in commodo. Eu in nisi voluptate veniam aliqua voluptate cillum laborum excepteur magna ut laborum id. Ipsum pariatur consectetur laboris ex eu culpa laborum adipisicing irure Lorem consectetur id non occaecat. Voluptate eu enim est laboris adipisicing non amet quis. Amet excepteur Lorem magna id ipsum nulla do labore officia exercitation eiusmod."}
+          ></textarea>
     </div>
   );
 }
