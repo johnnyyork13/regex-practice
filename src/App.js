@@ -17,37 +17,28 @@ function App() {
 
   function escapeRegex(string) {
     return string.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');
-}
+  }
+
+  function interpretValue(val) {
+    try {
+      return regex.sample.match(val)
+    } catch (err) {
+      console.log("Error"); 
+      return "";
+    }
+  }
 
   function handlePatternChange(e) {
-    const val = e.target.value;
-    if (val[val.length - 1] === "[" ) {
-      startBracket.started = true;
-    }
-    
-    if (!startBracket.started) {
       try {
-        const sample = regex.sample;
-        let fixedPattern = escapeRegex(e.target.value);
-        try {
-          setRegex((prev) => ({
-            ...prev,
-            output: sample.match(fixedPattern) ? sample.match(`${fixedPattern}`) : ""
-          }))
-          console.log(sample, fixedPattern, sample.match(fixedPattern));
-        } catch (err) {
-          console.log(err);
-        }
-        
+        setRegex((prev) => ({
+          ...prev,
+          output: interpretValue(e.target.value)
+        }))
+        //console.log(sample, fixedPattern, sample.match(fixedPattern));
       } catch (err) {
         console.log(err);
       }
-    } else {
-      startBracket.pattern = val;
-      if (val[val.length - 1] === "]") {
-        startBracket.started = false;
-      }
-    }
+        
   }
 
   function handleSelectedChange(e) {
@@ -64,7 +55,7 @@ function App() {
     }))
   }
 
-  
+  console.log("Value is: ", regex.output ? regex.output[0] : null);
 
   return (
     <div className="App">
@@ -86,7 +77,6 @@ function App() {
           name="sample" 
           onChange={handleSampleChange}
           onLoad={handleSampleChange}
-          value={"Minim nostrud qui irure voluptate pariatur dolore dolor amet et labore anim pariatur veniam culpa. Dolor ad sint labore aute pariatur aliqua aute in commodo. Eu in nisi voluptate veniam aliqua voluptate cillum laborum excepteur magna ut laborum id. Ipsum pariatur consectetur laboris ex eu culpa laborum adipisicing irure Lorem consectetur id non occaecat. Voluptate eu enim est laboris adipisicing non amet quis. Amet excepteur Lorem magna id ipsum nulla do labore officia exercitation eiusmod."}
           ></textarea>
     </div>
   );
